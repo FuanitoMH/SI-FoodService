@@ -1,6 +1,23 @@
 import flet as ft
 
+from models.staff import *
+
 def ProfileView(page):
+    nameUser = ft.Text("", size=25)
+    phoneUser = ft.Text("", size=25)
+    emailUser = ft.Text("", size=25)
+
+
+    session = page.client_storage.get('session')
+    print(session, '/profile')
+
+    query = getStaffById(session)
+    for staff in query:
+        nameUser.value = staff.sta_name
+        phoneUser.value = staff.sta_phone
+        emailUser.value = staff.sta_email
+
+
     
     content = ft.Column(
                
@@ -20,29 +37,21 @@ def ProfileView(page):
                 ),
                 ft.Row(
                     [
-                        ft.Text("Name: CodingJQ")
+                        nameUser
                     ],
                 ),
                 ft.Row(
                     [
-                        ft.Text("Member Since: 2023")
+                        phoneUser
                     ]
                 ),
                 ft.Row(
                     [
-                        ft.Text("Github: https://github.com/CodingJQ")
+                        emailUser
                     ]
                 )
 
             ]
         )
-    
-    
-    
-    
-    
-    
-    
-    
     
     return content

@@ -1,30 +1,30 @@
 import flet as ft
 
+
 def IndexView(page):
 
-    session = page.client_storage.get('session')
-    print(session, '/index')
+    # Controls
+    text = ft.Text("Welcome", size=50)
     
-    if session == None:
-        print('NO LOGGEADO /index')
-        page.go('/loggin')
-            
+    session = page.client_storage.get('session')
+    if session != None:
+        text.value = f"Welcome {session}"
+    print(session, '/index')
 
     content = ft.Column(
-            [
-                ft.Row(
+        [  
+            ft.Row(
                 [
-                    ft.Text(
-                        "Welcome to my Flet Router Tutorial " + str(session),
-                        size=50)
+                    text
                 ], 
                 alignment=ft.MainAxisAlignment.CENTER
             )
-            ]
-    
+        ]
     )
     
+
     return content
+
 
 if __name__ == '__main__':
     IndexView()

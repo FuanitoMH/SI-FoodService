@@ -25,6 +25,9 @@ def addStaff (name, phone, email, rool, pw) -> None:
 
 def logginStaff(email, pw):
     return staff.select().where((staff.sta_email == email )&(staff.sta_password == pw))
+
+def getStaffById(id: int):
+    return staff.select().where(staff.sta_id == id)
        
 
 if __name__ == '__main__':
