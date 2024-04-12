@@ -8,7 +8,7 @@ def logginView(page: ft.Page):
         alet_error.open = False
         page.update()
 
-    def openAlert():
+    def showAlert():
         page.dialog = alet_error
         alet_error.open = True
         text_email.value = ""
@@ -37,7 +37,7 @@ def logginView(page: ft.Page):
         if query.count() == 0:
             print('Usuario no encontrado')
             btn_login.disabled = True
-            openAlert()
+            showAlert()
         else:
             sessionId = None 
             for staff in query:
@@ -57,7 +57,6 @@ def logginView(page: ft.Page):
             btn_login.disabled = False
         else:
             btn_login.disabled = True
-        
         page.update()
 
     text_email.on_change = validateInput

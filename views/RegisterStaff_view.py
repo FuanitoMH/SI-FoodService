@@ -1,29 +1,67 @@
 import flet as ft
+import re
 from models.staff import addStaff
+from user_controls.alter_dialog import AlertDialog
+
+
+def is_valid_email(email):
+    regex = r'^[(a-z0-9\_\-\.)]+@[(a-z0-9\_\-\.)]+\.[(a-z)]{2,4}$'
+    if re.match(regex, email):
+        return True
+    return False
 
 def registerStaffView(page):
     
-    name = ft.TextField(label="Nombre", value='juan', text_align=ft.TextAlign.RIGHT, width=100)
-    phone = ft.TextField(label="Phone", text_align=ft.TextAlign.RIGHT, width=100)
-    email = ft.TextField(label="Correo", text_align=ft.TextAlign.LEFT, width=100)
-    rool = ft.TextField(label="Rool", text_align=ft.TextAlign.LEFT, width=100)
-    pw = ft.TextField(label="Contraseña", text_align=ft.TextAlign.LEFT, width=100)
-    
-   
+    # Controls 
+    text_name  :ft.TextField = ft.TextField(label="Nombre", text_align=ft.TextAlign.LEFT, width=300)
+    text_phone :ft.TextField = ft.TextField(label="Phone", text_align=ft.TextAlign.LEFT, width=300, input_filter=ft.NumbersOnlyInputFilter(), max_length=10, )
+    text_email :ft.TextField = ft.TextField(label="Correo", text_align=ft.TextAlign.LEFT, width=300)
+    text_rool  :ft.TextField = ft.TextField(label="Rool", text_align=ft.TextAlign.LEFT, width=300)
+    text_passw :ft.TextField = ft.TextField(label="Contraseña", text_align=ft.TextAlign.LEFT, width=300, password=True, can_reveal_password=True, max_length=8)
+    btn_register = ft.ElevatedButton("Registrar", width=300, disabled=True)
+    alert_registered = AlertDialog(page, title="Registro Exitoso", content="Usuario registrado exitosamente")
+    alert_error_email = AlertDialog(page, title="Error", content="Email no valido")
+
+    # Functions
     def registerStaff(e):
-        addStaff(name.value, phone.value, email.value, rool.value, pw.value)
+        if is_valid_email(text_email.value):
+            addStaff(text_name.value, text_phone.value, text_email.value, text_rool.value, text_passw.value)
+            page.client_storage.set("session", text_name.value)
+            alert_registered.show()
+            page.go('/')
+        else:
+            alert_error_email.show()
 
-    btnRegStaff = ft.IconButton(icon=ft.icons.ADD_CIRCLE, on_click=registerStaff)
 
-    content = ft.Column(
+    def validateInputs(e):
+        if all([text_name.value, text_phone.value, text_email.value, text_rool.value, text_passw.value]):
+            btn_register.disabled = False
+
+        else:
+            btn_register.disabled = True
+        page.update()
+
+
+    # Events
+    btn_register.on_click = registerStaff
+    text_name.on_change  = validateInputs
+    text_phone.on_change = validateInputs
+    text_email.on_change = validateInputs
+    text_rool.on_change  = validateInputs
+    text_passw.on_change = validateInputs
+
+
+    content = ft.Row(
         [
-            ft.Text("Register a new staff member", size=20),                
-            name, 
-            phone,
-            email,
-            rool,
-            pw,
-            btnRegStaff
+            ft.Column([
+                ft.Text("Registrate", size=20),                
+                text_name,
+                text_phone,
+                text_email,
+                text_rool,
+                text_passw,
+                btn_register
+            ])
         ],
         alignment=ft.MainAxisAlignment.CENTER
     )       

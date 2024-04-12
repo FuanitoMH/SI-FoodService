@@ -7,7 +7,6 @@ def ProfileView(page):
     phoneUser = ft.Text("", size=25)
     emailUser = ft.Text("", size=25)
 
-
     session = page.client_storage.get('session')
     print(session, '/profile')
 

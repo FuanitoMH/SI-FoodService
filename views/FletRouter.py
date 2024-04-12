@@ -4,7 +4,6 @@ import flet as ft
 from views.index_view import IndexView
 from views.profile_view import ProfileView
 from views.settings_view import SettingsView
-
 from views.loggin_view import logginView
 
 # views Staff
