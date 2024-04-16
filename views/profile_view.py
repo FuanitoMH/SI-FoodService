@@ -54,3 +54,6 @@ def ProfileView(page):
         )
     
     return content
+
+if __name__ == "__main__":
+    ProfileView(ft.Page())

@@ -1,20 +1,9 @@
 import flet as ft
 from models.staff import logginStaff
+from user_controls.alert_dialog import AlertDialog
 
 
 def logginView(page: ft.Page):
-
-    def closeAlert(e):
-        alet_error.open = False
-        page.update()
-
-    def showAlert():
-        page.dialog = alet_error
-        alet_error.open = True
-        text_email.value = ""
-        text_passw.value = ""
-        page.update()
-    
 
     text_email: ft.TextField     = ft.TextField(label="Correo", text_align=ft.TextAlign.LEFT, width=200)
     text_passw: ft.TextField     = ft.TextField(label="Contraseña", text_align=ft.TextAlign.LEFT, width=200, password=True)
@@ -23,13 +12,7 @@ def logginView(page: ft.Page):
                 content=ft.Text("Registrarse", size=12),
                 width=200, color=ft.colors.BLUE_200)
     
-    alet_error: ft.AlertDialog   = ft.AlertDialog(
-                title=ft.Text("Usuario no encontrado", size=22, color=ft.colors.RED, text_align=ft.TextAlign.CENTER),
-                content=ft.Text("El correo o la contraseña son incorrectos", size=12),
-                actions=[
-                    ft.TextButton("Aceptar", on_click=closeAlert)
-                ],actions_alignment=ft.MainAxisAlignment.END
-                )
+    alert_dialog = AlertDialog(page)
    
     def loggin(e):
         query = logginStaff(text_email.value, text_passw.value)
@@ -37,7 +20,7 @@ def logginView(page: ft.Page):
         if query.count() == 0:
             print('Usuario no encontrado')
             btn_login.disabled = True
-            showAlert()
+            alert_dialog.show(title="ERROR", content="Correo o Contraseña incorrectos", status="error")
         else:
             sessionId = None 
             for staff in query:
@@ -72,8 +55,7 @@ def logginView(page: ft.Page):
                     text_email,
                     text_passw,
                     btn_login,
-                    btn_register,
-                    alet_error
+                    btn_register
                 ]
             ) 
         ],

@@ -1,7 +1,7 @@
 import flet as ft
 import re
 from models.staff import addStaff
-from user_controls.alter_dialog import AlertDialog
+from user_controls.alert_dialog import AlertDialog
 
 
 def is_valid_email(email):
@@ -19,24 +19,23 @@ def registerStaffView(page):
     text_rool  :ft.TextField = ft.TextField(label="Rool", text_align=ft.TextAlign.LEFT, width=300)
     text_passw :ft.TextField = ft.TextField(label="Contraseña", text_align=ft.TextAlign.LEFT, width=300, password=True, can_reveal_password=True, max_length=8)
     btn_register = ft.ElevatedButton("Registrar", width=300, disabled=True)
-    alert_registered = AlertDialog(page, title="Registro Exitoso", content="Usuario registrado exitosamente")
-    alert_error_email = AlertDialog(page, title="Error", content="Email no valido")
+    alert_dialog = AlertDialog(page)
+    
 
     # Functions
     def registerStaff(e):
         if is_valid_email(text_email.value):
             addStaff(text_name.value, text_phone.value, text_email.value, text_rool.value, text_passw.value)
-            page.client_storage.set("session", text_name.value)
-            alert_registered.show()
-            page.go('/')
+            alert_dialog.show(title="SUCCESS", content="Usuario registrado", status="success")
+            page.go('/login')
         else:
-            alert_error_email.show()
+            alert_dialog.show(title="ERROR", content="Correo o Contraseña incorrectos", status="error")
+            print('click')
 
 
     def validateInputs(e):
         if all([text_name.value, text_phone.value, text_email.value, text_rool.value, text_passw.value]):
             btn_register.disabled = False
-
         else:
             btn_register.disabled = True
         page.update()
