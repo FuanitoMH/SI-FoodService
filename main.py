@@ -2,9 +2,7 @@ import flet as ft
 import asyncio
 from views.FletRouter import Router
 
-
 from user_controls.app_bar import NavBar
-from views.loggin_view import logginView
  
  
 def main(page: ft.Page):
