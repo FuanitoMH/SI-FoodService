@@ -1,12 +1,11 @@
 import flet as ft
-import asyncio
 from views.FletRouter import Router
 
 from user_controls.app_bar import NavBar
  
  
 def main(page: ft.Page):
-    page.theme_mode = "dark"
+    page.theme_mode = 'dark'
 
     page.appbar = NavBar(page)
     myRouter = Router(page)
@@ -17,8 +16,8 @@ def main(page: ft.Page):
     )
 
     if page.client_storage.get('session') == None:
-        page.go("/login")
+        page.go("/home")
     else:
-        page.go("/")
+        page.go("/home")
 
 ft.app(target=main, assets_dir="assets")

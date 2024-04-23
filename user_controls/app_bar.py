@@ -10,7 +10,7 @@ def NavBar(page):
             center_title=False,
             bgcolor=ft.colors.SURFACE_VARIANT,
             actions=[
-                ft.IconButton(ft.icons.HOME, on_click=lambda _: page.go('/'), ),
+                ft.IconButton(ft.icons.HOME, on_click=lambda _: page.go('/home'), ),
                 ft.IconButton(ft.icons.PERSON_ROUNDED, on_click=lambda _: page.go('/profile')),
                 ft.IconButton(ft.icons.SETTINGS_ROUNDED, on_click=lambda _: page.go('/settings'))
             ]

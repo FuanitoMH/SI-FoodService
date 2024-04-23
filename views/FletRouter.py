@@ -12,7 +12,7 @@ from views.RegisterStaff_view import registerStaffView
 
 def myRutes(page: ft.Page, ruta: str):
     routes = {
-        "/": IndexView(page),
+        "/home": IndexView(page),
         "/profile": ProfileView(page),
         "/settings": SettingsView(page),
         "/staff": registerStaffView(page),
@@ -26,7 +26,7 @@ class Router:
     def __init__(self, page):
         self.page = page
         self.ft = ft
-        self.body = ft.Container(content=myRutes(page, "/"))
+        self.body = ft.Container(content=myRutes(page, "/home"))
 
     def route_change(self, route):
         print('rute: ', route.route)

@@ -6,23 +6,60 @@ def ProductsView(page):
             [
                 ft.Row(
                 [
-                    ft.Text("My Products", size=30), 
-                    ft.IconButton(icon=ft.icons.PRODUCTION_QUANTITY_LIMITS, icon_size=30),
-
-                    ], 
-                alignment=ft.MainAxisAlignment.CENTER
+                    ft.TextField(
+                        icon=ft.icons.SEARCH, 
+                        width=850, 
+                        label='Buscar',
+                        border= 'none'
+                    ),
+                    ft.ElevatedButton(
+                        "All", 
+                        color=ft.colors.WHITE,
+                        bgcolor=ft.colors.BLUE
+                    ),
+                    ft.Dropdown(
+                        label='Categoria',
+                        bgcolor=ft.colors.BLUE,
+                        color=ft.colors.WHITE,
+                        width=140,
+                        border='none',
+                        options=[
+                            ft.dropdown.Option("All"),
+                            ft.dropdown.Option("bebida"),
+                            ft.dropdown.Option("comida"),
+                            ft.dropdown.Option("acompañamiento"),
+                            ]
+                        ),
+                    ft.Dropdown(
+                        label='Temperatura',
+                        bgcolor=ft.colors.BLUE,
+                        color=ft.colors.WHITE,
+                        width=140,
+                        border='none',
+                        options=[
+                            ft.dropdown.Option("All"),
+                            ft.dropdown.Option("seco"),
+                            ft.dropdown.Option("refrigerado"),
+                            ft.dropdown.Option("congelado"),
+                            ]
+                        ),
+                    ft.ElevatedButton(
+                        "Nuevo Producto", 
+                        color=ft.colors.WHITE, 
+                        width=120,
+                        bgcolor=ft.colors.GREEN,
+                        
+                    )
+                ], 
+                alignment=ft.MainAxisAlignment.SPACE_BETWEEN
             ),
                 ft.Row(
                     [
                         ft.TextButton("Puros pinches productos", icon=ft.icons.WB_SUNNY_OUTLINED)
                     ],
-                ),
-                ft.Row(
-                    [
-                        ft.TextButton("Holaaa", icon=ft.icons.CLOSE, icon_color="red")
-                    ]
-                ),
-            ]
+                )
+            ],
+            width=1400
         )
     
     
