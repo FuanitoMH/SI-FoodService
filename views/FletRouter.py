@@ -1,10 +1,10 @@
 import flet as ft
 
 # views
-from views.index_view import IndexView
-from views.profile_view import ProfileView
-from views.settings_view import SettingsView
-from views.loggin_view import logginView
+from views.home_view import HomeView
+from views.profile.profile_view import ProfileView
+from views.settings.settings_view import SettingsView
+from views.loggin.loggin_view import logginView
 
 # views Staff
 from views.RegisterStaff_view import registerStaffView
@@ -12,7 +12,7 @@ from views.RegisterStaff_view import registerStaffView
 
 def myRutes(page: ft.Page, ruta: str):
     routes = {
-        "/home": IndexView(page),
+        "/home": HomeView(page),
         "/profile": ProfileView(page),
         "/settings": SettingsView(page),
         "/staff": registerStaffView(page),

@@ -5,9 +5,9 @@ from user_controls.alert_dialog import AlertDialog
 
 def logginView(page: ft.Page):
 
-    text_email: ft.TextField     = ft.TextField(label="Correo", text_align=ft.TextAlign.LEFT, width=200)
-    text_passw: ft.TextField     = ft.TextField(label="Contraseña", text_align=ft.TextAlign.LEFT, width=200, password=True)
-    btn_login: ft.ElevatedButton = ft.ElevatedButton("Aceptar", width=200, disabled=True)
+    text_email: ft.TextField     = ft.TextField(label="Correo", text_align=ft.TextAlign.LEFT, width=300)
+    text_passw: ft.TextField     = ft.TextField(label="Contraseña", text_align=ft.TextAlign.LEFT, width=300, password=True)
+    btn_login: ft.ElevatedButton = ft.ElevatedButton("Aceptar", width=300, disabled=True)
     btn_register: ft.CupertinoButton  = ft.CupertinoButton(
                 content=ft.Text("Registrarse", size=12),
                 width=200, color=ft.colors.BLUE_200)
@@ -30,7 +30,7 @@ def logginView(page: ft.Page):
             page.client_storage.set("session", sessionId)
             print(f'loggin {sessionName}')
 
-            page.go('/')
+            page.go('/home')
             
     def register(e):
         page.go('/staff')

@@ -14,7 +14,7 @@ def change_view(index, page):
     return views[index]
 
 
-def IndexView(page):
+def HomeView(page):
     view = ft.Container(content=change_view(0, page))
 
     def navRail(e):
@@ -25,8 +25,8 @@ def IndexView(page):
         selected_index=0,
         label_type=ft.NavigationRailLabelType.ALL,
         # extended=True,
-        min_width=100,
-        min_extended_width=400,
+        # min_width=20,
+        # min_extended_width=300,
         group_alignment=-0.9,
         destinations=[
             ft.NavigationRailDestination(
@@ -48,21 +48,17 @@ def IndexView(page):
         on_change=navRail,
     )
 
-    content = ft.Column(
-        [  
-            ft.Row(
-                [
-                    rail,
-                    view
-                ], 
-                alignment=ft.MainAxisAlignment.START,
-                height=700
-            )
-        ]
-    )
-
+    content = ft.Row(
+            [
+                rail,
+                view
+            ], 
+            alignment=ft.MainAxisAlignment.START,
+            height=1000
+        )
+    
     return content
 
 
 if __name__ == '__main__':
-    IndexView()
+    HomeView()
