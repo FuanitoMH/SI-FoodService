@@ -6,7 +6,7 @@ def NavBar(page):
     NavBar = ft.AppBar(
             leading=ft.Icon(ft.icons.TAG_FACES_ROUNDED),
             leading_width=40,
-            title=ft.Text("Flet Router"),
+            title=ft.Text("Food Service Group"),
             center_title=False,
             bgcolor=ft.colors.SURFACE_VARIANT,
             actions=[

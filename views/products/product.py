@@ -2,8 +2,15 @@ import flet as ft
 from models.product import get_products
 from user_controls.alert_dialog import AlertDialog
 from views.products.modal_product import ProductModal
+from user_controls.app_nav import nav_view
+
+
+
 
 def ProductsView(page):
+    # NAVIGATION
+    nav = nav_view(page)
+
     # -- FUNCTIONS --
     def open_modal(e: ft.ControlEvent):
         product_modal.show()
@@ -91,8 +98,20 @@ def ProductsView(page):
                 contProducts
             ],
             alignment=ft.MainAxisAlignment.START,
-            width=1500,
+            width=1450,
         )
+
+
+
+    view = ft.Container(
+        content=ft.Row(
+            controls=[
+                nav, 
+                content
+            ], 
+            vertical_alignment=ft.CrossAxisAlignment.START,
+        )
+    )
     
     
-    return content
+    return view

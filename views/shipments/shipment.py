@@ -1,6 +1,9 @@
 import flet as ft
+from user_controls.app_nav import nav_view
 
 def ShipmentView(page):
+    # NAVIGATION
+    nav = nav_view(page)
 
     content = ft.Column(
             [
@@ -14,4 +17,15 @@ def ShipmentView(page):
                 )
             ]
         )
-    return content
+    
+    view = ft.Container(
+        content=ft.Row(
+            controls=[
+                nav, 
+                content
+            ], 
+            vertical_alignment=ft.CrossAxisAlignment.START,
+        )
+    )
+
+    return view

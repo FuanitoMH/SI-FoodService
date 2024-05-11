@@ -1,6 +1,6 @@
 import flet as ft
 from peewee import *
-from connectionDB import BaseModel
+from models.connectionDB import BaseModel
 
 
 class product(BaseModel):

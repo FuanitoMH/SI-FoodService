@@ -9,6 +9,10 @@ from views.loggin.loggin_view import logginView
 # views Staff
 from views.RegisterStaff_view import registerStaffView
 
+# views Departments
+from views.products.product import ProductsView
+from views.orders.order import OrderView
+from views.shipments.shipment import ShipmentView
 
 def myRutes(page: ft.Page, ruta: str):
     routes = {
@@ -16,7 +20,10 @@ def myRutes(page: ft.Page, ruta: str):
         "/profile": ProfileView(page),
         "/settings": SettingsView(page),
         "/staff": registerStaffView(page),
-        "/login": logginView(page)
+        "/login": logginView(page),
+        "/products": ProductsView(page),
+        "/orders": OrderView(page),
+        "/shipments": ShipmentView(page),
     }
     return routes[ruta]
 

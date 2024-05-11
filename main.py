@@ -1,5 +1,5 @@
 import flet as ft
-from views.FletRouter import Router
+from views.Router import Router
 
 from user_controls.app_bar import NavBar
  
