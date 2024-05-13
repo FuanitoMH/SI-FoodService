@@ -1,5 +1,5 @@
 import flet as ft
-from models.product import get_products, get_product_by_category, get_product_by_temperature, get_product_by_name
+from models.product import get_products, get_product_by_category, get_product_by_temperature, get_product_by_name, delete_product_by_id
 from user_controls.alert_dialog import AlertDialog
 from user_controls.app_nav import nav_view
 
@@ -32,6 +32,15 @@ def ProductsView(page):
                             ft.dropdown.Option("congelado"),
                             ]
                         )
+
+    def delete_product(e: ft.ControlEvent):
+        delete_product_by_id(e.control.tooltip)
+        data_products = get_products()
+        list_products = []
+        list_products = draw_products(data_products)
+        container_Products.controls = list_products
+        page.update()
+        alert_dialog.show('Producto eliminado', 'El producto ha sido eliminado correctamente', status='info')
     
     def draw_products(data_products):
         products = []
@@ -46,8 +55,15 @@ def ProductsView(page):
             products.append(
                 ft.Container(
                         content=ft.Column(
-                            [
-                                ft.Text(value=product.pro_name.upper(), size=20, width=240, text_align=ft.TextAlign.CENTER),
+                            [   
+                                ft.Row(
+                                    [
+                                        ft.Text(value=product.pro_name.upper(), size=20, width=200, text_align=ft.TextAlign.CENTER),
+                                        ft.IconButton(icon=ft.icons.DELETE_FOREVER_ROUNDED, icon_color="pink600", icon_size=20,
+                                                    tooltip=product.pro_id, on_click=lambda e: delete_product(e)),
+                                    ],
+                                    alignment=ft.MainAxisAlignment.SPACE_BETWEEN
+                                ),
                                 ft.Text(value=product.pro_description, size=15),
                                 ft.Row(
                                     [
@@ -78,7 +94,7 @@ def ProductsView(page):
         return products
     
 
-     # -- VARIABLES --
+    # -- VARIABLES --
     list_products = []
     data_products = get_products()
     list_products = draw_products(data_products)
@@ -130,6 +146,8 @@ def ProductsView(page):
         dwn_Category.value = ''
         dwn_Temperature.value = ''
         page.update()
+
+    
 
     # -- EVENTS --
     btn_NewProduct.on_click = lambda e: page.go('/products/register')

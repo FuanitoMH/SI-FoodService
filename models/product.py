@@ -40,6 +40,9 @@ def get_product_by_category(category: str):
 def get_product_by_temperature(temperature: str):
     return product.select().where(product.pro_temperature == temperature)
        
+def delete_product_by_id(id: int):
+    product.delete().where(product.pro_id == id).execute()
+    print('Product deleted successfully')
 
 if __name__ == '__main__':
     post_product()
