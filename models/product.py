@@ -30,6 +30,15 @@ def get_products():
 
 def get_product_by_id(id: int):
     return product.select().where(product.sta_id == id)
+
+def get_product_by_name(name: str):
+    return product.select().where(product.pro_name.contains(name))
+
+def get_product_by_category(category: str):
+    return product.select().where(product.pro_category == category)
+
+def get_product_by_temperature(temperature: str):
+    return product.select().where(product.pro_temperature == temperature)
        
 
 if __name__ == '__main__':

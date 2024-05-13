@@ -55,9 +55,11 @@ class ProductModal:
             self.dwn_Temperature.value,
             self.pro_sup_id.value
         )
-            self.page.go('/home')
             self.clean_fields()
             alert_dialog.show(title="SUCCESS", content="Producto registrado", status="success")
+            # self.page.go('/home')
+            self.page.go('/products')
+            self.page.update()
         else:        
             alert_dialog.show(title="ERROR", content="Todos los campos son requeridos", status="error")
             self.clean_fields()

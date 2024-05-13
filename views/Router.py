@@ -11,6 +11,7 @@ from views.RegisterStaff_view import registerStaffView
 
 # views Departments
 from views.products.product import ProductsView
+from views.products.product_register import ProductsRegisterView
 from views.orders.order import OrderView
 from views.shipments.shipment import ShipmentView
 
@@ -22,6 +23,7 @@ def myRutes(page: ft.Page, ruta: str):
         "/staff": registerStaffView(page),
         "/login": logginView(page),
         "/products": ProductsView(page),
+        "/products/register": ProductsRegisterView(page),
         "/orders": OrderView(page),
         "/shipments": ShipmentView(page),
     }
@@ -36,7 +38,7 @@ class Router:
         self.body = ft.Container(content=myRutes(page, "/home"))
 
     def route_change(self, route):
-        print('rute: ', route.route)
+        print('current rute: ', route.route)
         # self.body.content = self.routes[route.route]
         self.body.content = myRutes(self.page, route.route)
         self.body.update()
