@@ -33,7 +33,7 @@ def logginView(page: ft.Page):
             page.go('/home')
             
     def register(e):
-        page.go('/staff')
+        page.go('/staff/register')
 
     def validateInput(e: ft.ControlEvent) -> None:
         if all([text_email.value, text_passw.value]):

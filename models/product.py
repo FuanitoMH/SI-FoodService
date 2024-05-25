@@ -1,4 +1,3 @@
-import flet as ft
 from peewee import *
 from models.connectionDB import BaseModel
 
@@ -25,24 +24,21 @@ def post_product (name, description, stock, category, temperature, sup_id) -> No
     )
     print('Product created successfully')
 
-def get_products():
+def get_products() -> list:
     return product.select()
 
-def get_product_by_id(id: int):
+def get_product_by_id(id: int) -> list:
     return product.select().where(product.sta_id == id)
 
-def get_product_by_name(name: str):
+def get_product_by_name(name: str) -> list:
     return product.select().where(product.pro_name.contains(name))
 
-def get_product_by_category(category: str):
+def get_product_by_category(category: str) -> list:
     return product.select().where(product.pro_category == category)
 
-def get_product_by_temperature(temperature: str):
+def get_product_by_temperature(temperature: str) -> list:
     return product.select().where(product.pro_temperature == temperature)
        
-def delete_product_by_id(id: int):
+def delete_product_by_id(id: int) -> None:
     product.delete().where(product.pro_id == id).execute()
-    print('Product deleted successfully')
-
-if __name__ == '__main__':
-    post_product()
+    

@@ -14,7 +14,7 @@ def ProductsView(page):
     # -- CONTROLS --
     alert_dialog = AlertDialog(page)
     text_search = ft.TextField(icon=ft.icons.SEARCH, width=600, label='Buscar', border= 'UNDERLINE', border_color=ft.colors.WHITE)
-    btn_search = ft.ElevatedButton(text='Reset', icon=ft.icons.RESTART_ALT, icon_color='#9AC8CD', color=ft.colors.WHITE, bgcolor=ft.colors.BLUE)
+    btn_reset = ft.ElevatedButton(text='Reset', icon=ft.icons.RESTART_ALT, icon_color='#9AC8CD', color=ft.colors.WHITE, bgcolor=ft.colors.BLUE)
     btn_NewProduct = ft.ElevatedButton( "Nuevo Producto", color=ft.colors.WHITE, width=110, bgcolor=ft.colors.GREEN)
 
     dwn_Category = ft.Dropdown(label='Categoria', bgcolor=ft.colors.BLUE, color=ft.colors.WHITE, width=140, border='none', text_size=15,
@@ -103,7 +103,6 @@ def ProductsView(page):
     container_Products = ft.Row(controls=list_products,
                         wrap=True,
                         scroll='HIDDEN',
-                        # expand=True,
                         height=600,
                         width=1410,
                         run_spacing=10,
@@ -153,16 +152,16 @@ def ProductsView(page):
     btn_NewProduct.on_click = lambda e: page.go('/products/register')
     dwn_Category.on_change = serach_by_category
     dwn_Temperature.on_change = serach_by_temperature
-    btn_search.on_click = search_by_name
+    # btn_search.on_click = search_by_name
     text_search.on_change = search_by_name
-    btn_search.on_click = search_all_products
+    btn_reset.on_click = search_all_products
 
     content = ft.Column(
             [
                 ft.Row(
                     [   
                         text_search,
-                        btn_search,
+                        btn_reset,
                         dwn_Category, 
                         dwn_Temperature,
                         btn_NewProduct

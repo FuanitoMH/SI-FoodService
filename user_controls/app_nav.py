@@ -49,11 +49,38 @@ def nav_view(page):
             ),
             on_click=lambda _: page.go('/shipments')
         )
+    
+    btn_view_client = ft.TextButton(
+            width=100,
+            content=ft.Column(
+                [
+                    ft.Icon(name=ft.icons.GROUPS_OUTLINED, color=color_text ),
+                    ft.Text(value="Cientes", color=color_text),
+                ],
+                horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                alignment=ft.MainAxisAlignment.CENTER,
+            ),
+            on_click=lambda _: page.go('/clients')
+        )
 
+    btn_view_staff = ft.TextButton(
+            width=100,
+            content=ft.Column(
+                [
+                    ft.Icon(name=ft.icons.EMOJI_PEOPLE_OUTLINED, color=color_text ),
+                    ft.Text(value="R.H.", color=color_text),
+                ],
+                horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                alignment=ft.MainAxisAlignment.CENTER,
+            ),
+            on_click=lambda _: page.go('/staff')
+        )
     nav = ft.Column(
         controls=[
             btn_home_view,
             btn_product_view,
+            btn_view_client,
+            btn_view_staff,
             btn_view_order,
             btn_view_shipment,
         ], 

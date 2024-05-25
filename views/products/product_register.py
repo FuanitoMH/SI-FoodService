@@ -1,7 +1,6 @@
 import flet as ft
 from models.product import get_products, post_product
 from user_controls.alert_dialog import AlertDialog
-from views.products.modal_product import ProductModal
 from user_controls.app_nav import nav_view
 
 

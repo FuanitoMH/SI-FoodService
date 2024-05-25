@@ -10,7 +10,7 @@ def ProfileView(page):
     session = page.client_storage.get('session')
     print(session, '/profile')
 
-    query = getStaffById(session)
+    query = get_staff_by_id(session)
     for staff in query:
         nameUser.value = staff.sta_name
         phoneUser.value = staff.sta_phone

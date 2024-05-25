@@ -1,7 +1,7 @@
 import flet as ft
     
 
-def NavBar(page):   
+def NavBar(page: ft.Page):   
 
     NavBar = ft.AppBar(
             leading=ft.Icon(ft.icons.TAG_FACES_ROUNDED),
