@@ -3,8 +3,9 @@ from models.connectionDB import BaseModel
 
 
 # Definición de los campos o columnas (Field instances)
-class client(BaseModel):
-    cli_id = IntegerField(primary_key=True)
+class Client(BaseModel):
+    # cli_id = IntegerField(primary_key=True)
+    cli_id = AutoField()
     cli_name = CharField(50)
     cli_phone = CharField(10)
     cli_email = CharField(30)
@@ -12,7 +13,7 @@ class client(BaseModel):
 
 
 def post_client(name, phone, email, address) -> None:
-    client.create(
+    Client.create(
         cli_name=name,
         cli_phone=phone,
         cli_email=email,
@@ -22,11 +23,22 @@ def post_client(name, phone, email, address) -> None:
 
 
 def get_clients() -> list:
-    return client.select()
+    return Client.select()
+
+def get_client_by_id(id: int):
+    return Client.select().where(Client.cli_id == id)
 
 def get_client_by_name(name: str) -> list:
-    return client.select().where(client.cli_name.contains(name))
-
+    return Client.select().where(Client.cli_name.contains(name))
 
 def delete_client_by_id(id: int) -> None:
-    client.delete().where(client.cli_id == id).execute()
+    Client.delete().where(Client.cli_id == id).execute()
+
+
+# Querys for orders
+def get_name_clients():
+    return Client.select(Client.cli_id, Client.cli_name)
+
+def get_one_client_by_id(id: int):
+    data = Client.select().where(Client.cli_id == id)
+    return data[0]
