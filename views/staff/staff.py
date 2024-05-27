@@ -35,7 +35,6 @@ def StaffView(page):
         content.update()
 
     def update_staff(e):
-        # global view_register
         view_register.content = registerStaffView(page, int(e.control.tooltip))
         content.content = content_register
         content.update()

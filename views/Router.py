@@ -15,7 +15,7 @@ from views.products.product import ProductsView
 from views.products.product_register import ProductsRegisterView
 from views.clients.client import ClientView
 from views.clients.client_register import ClientsRegisterView
-from views.orders.order import OrderView
+from views.orders.order import OrdersView
 from views.shipments.shipment import ShipmentView
 
 def myRutes(page: ft.Page, ruta: str):
@@ -30,7 +30,7 @@ def myRutes(page: ft.Page, ruta: str):
         "/products/register": ProductsRegisterView(page),
         "/clients": ClientView(page),
         "/clients/register": ClientsRegisterView(page),
-        "/orders": OrderView(page),
+        "/orders": OrdersView(page),
         "/shipments": ShipmentView(page),
     }
     return routes[ruta]

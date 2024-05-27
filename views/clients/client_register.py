@@ -76,7 +76,7 @@ def ClientsRegisterView(page: ft.Page):
                 width=500,
                 alignment=ft.MainAxisAlignment.END
             ),
-            ft.Text("Registrar Producto", size=20),
+            ft.Text("Registrar Cliente", size=20),
             text_name,
             text_phone,
             text_email,
