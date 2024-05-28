@@ -42,3 +42,5 @@ def get_product_by_temperature(temperature: str) -> list:
 def delete_product_by_id(id: int) -> None:
     product.delete().where(product.pro_id == id).execute()
     
+def get_name_products():
+    return product.select(product.pro_id, product.pro_name)
