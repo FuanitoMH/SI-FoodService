@@ -42,6 +42,9 @@ def get_order_by_date(order_by: str) -> list:
 def get_orders_by_status(status: str) -> list:
     return order.select(order, Client).join( Client, on=(order.ord_cli_id == Client.cli_id), attr='c').where(order.ord_status == status)
 
+def get_orders_by_status_preparation() -> list:
+    return order.select(order, Client).join( Client, on=(order.ord_cli_id == Client.cli_id), attr='c').where(order.ord_status == 'en preparacion')
+
 if __name__ == '__main__':
     data = get_order_join_client()
     for d in data:

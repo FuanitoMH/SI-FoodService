@@ -98,7 +98,5 @@ def registerStaffView(page, id:int=None):
         alignment=ft.MainAxisAlignment.CENTER,
     )       
 
-    page.update()
-
             
     return content

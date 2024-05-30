@@ -43,6 +43,7 @@ def get_staff_by_area(area: str) -> list:
 def delete_staff_by_id(id: int) -> None:
     staff.delete().where(staff.sta_id == id).execute()
     print('Staff deleted successfully')
+    return
 
 def update_staff(id: int, name: str, last_name: str, phone: str, email: str, area: str, pw: str) -> None:
     staff.update(
@@ -54,7 +55,10 @@ def update_staff(id: int, name: str, last_name: str, phone: str, email: str, are
         sta_password = pw
     ).where(staff.sta_id == id).execute()
     print('Staff updated successfully')
-       
+
+def get_name_carriers():
+    return staff.select(staff.sta_id, staff.sta_name, staff.sta_last_name).where(staff.sta_area == 'transportista')
+    
 
 if __name__ == '__main__':
     addStaff()

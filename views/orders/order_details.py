@@ -99,6 +99,11 @@ def ordenDetailsView(page, order_id:int=None):
     dwn_client.on_change = show_client
     btn_create_ord.on_click = create_order
 
+    data_products = get_name_products()
+    options_products = [ft.dropdown.Option(f'{product.pro_id}: {product.pro_name}') for product in data_products]
+    dwn_products = ft.Dropdown('Productos', text_size=16, width=200, border='UNDERLINE', options=options_products)
+    txt_stock = ft.TextField(label='Cantidad', text_size=16, width=100, border='none')
+
     # -- CONTAINERS --
     data = get_items_by_id_order(ord_id)
     items:list = draw_items(data)
@@ -123,11 +128,7 @@ def ordenDetailsView(page, order_id:int=None):
         )
     )
 
-    data_products = get_name_products()
-    options_products = [ft.dropdown.Option(f'{product.pro_id}: {product.pro_name}') for product in data_products]
-    dwn_products = ft.Dropdown('Productos', text_size=16, width=200, border='UNDERLINE', options=options_products)
-    txt_stock = ft.TextField(label='Cantidad', text_size=16, width=100, border='none')
-
+    # Container to show order details
     content_order = ft.Container(
         content = ft.Column(
             [
@@ -164,6 +165,7 @@ def ordenDetailsView(page, order_id:int=None):
         )
     )
 
+    # Container to show controls to create new order
     content_info_client = ft.Container()
     content_new_order = ft.Container(
         content=ft.Column(

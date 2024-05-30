@@ -23,7 +23,6 @@ def OrdersView(page):
                             ])
     btn_reset = ft.ElevatedButton(text='Reset', icon=ft.icons.RESTART_ALT, icon_color='#9AC8CD')
     btn_NewOrder = ft.ElevatedButton( "Nueva Orden", color=ft.colors.WHITE, width=140, bgcolor=ft.colors.GREEN)
-    # btn_viewDetails = ft.ElevatedButton( "Ver Detalles", width=130, bgcolor=ft.colors.BLUE_300, color=ft.colors.WHITE)
     btn_cancel = ft.IconButton(icon=ft.icons.CANCEL_OUTLINED, icon_color=ft.colors.RED)
 
 
