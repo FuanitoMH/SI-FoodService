@@ -14,7 +14,6 @@ def ProductsRegisterView(page: ft.Page):
     text_name = ft.TextField(label='Nombre', width=500, border='UNDERLINE', text_size=15)
     text_description = ft.TextField(label='Descripción', width=500, height=200, border='none', text_size=15, multiline=True)
     number_stock = ft.TextField(label='Existencias', width=160, border='UNDERLINE', input_filter=ft.NumbersOnlyInputFilter(), text_size=15)
-    pro_sup_id = ft.TextField(label='ID proveedor', width=500, border='UNDERLINE', text_size=15)
 
     dwn_category = ft.Dropdown(label='Categoria', bgcolor=ft.colors.BLUE, color=ft.colors.WHITE, width=160, border='none', text_size=15,
         options=[
@@ -40,7 +39,7 @@ def ProductsRegisterView(page: ft.Page):
             clean_fields()
             return
 
-        post_product(text_name.value, text_description.value, number_stock.value, dwn_category.value, dwn_Temperature.value, pro_sup_id.value)
+        post_product(text_name.value, text_description.value, number_stock.value, dwn_category.value, dwn_Temperature.value)
         alert.show(title="Éxito", content="Producto registrado", status="success")
         page.go('/products')
 
@@ -48,7 +47,7 @@ def ProductsRegisterView(page: ft.Page):
         page.go('/products')
     
     def validate_inputs():
-        if all([text_name.value, text_description.value, number_stock.value, dwn_category.value, dwn_Temperature.value, pro_sup_id.value]):
+        if all([text_name.value, text_description.value, number_stock.value, dwn_category.value, dwn_Temperature.value]):
             return True
         return False
     
@@ -58,7 +57,6 @@ def ProductsRegisterView(page: ft.Page):
         number_stock.value = ''
         dwn_category.value = ''
         dwn_Temperature.value = ''
-        pro_sup_id.value = ''
         page.update()
 
 
@@ -66,7 +64,6 @@ def ProductsRegisterView(page: ft.Page):
     text_name.on_change = validate_inputs
     text_description.on_change = validate_inputs
     number_stock.on_change = validate_inputs
-    pro_sup_id.on_change = validate_inputs
     dwn_category.on_change = validate_inputs
     dwn_Temperature.on_change = validate_inputs
 
@@ -94,7 +91,6 @@ def ProductsRegisterView(page: ft.Page):
                 width=500,
                 alignment=ft.MainAxisAlignment.SPACE_BETWEEN
             ),
-            pro_sup_id,
             ft.Row(
                 [
                     btn_cancel,

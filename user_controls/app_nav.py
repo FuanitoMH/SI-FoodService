@@ -2,6 +2,8 @@ import flet as ft
 
 def nav_view(page):
 
+    session_area = page.client_storage.get('session_area')
+
     color_text = ft.colors.WHITE if page.theme_mode == "dark" else ft.colors.BLACK
 
     btn_home_view = ft.TextButton(
@@ -75,15 +77,46 @@ def nav_view(page):
             ),
             on_click=lambda _: page.go('/staff')
         )
-    nav = ft.Column(
-        controls=[
+    
+    controls_nav: list = []
+    if session_area == 'admin':
+        controls_nav = [
             btn_home_view,
             btn_product_view,
             btn_view_client,
             btn_view_staff,
             btn_view_order,
             btn_view_shipment,
-        ], 
+        ]
+
+    if session_area == 'compras':
+        controls_nav = [
+            btn_home_view,
+            btn_product_view,
+        ]
+    
+    if session_area == 'ventas':
+        controls_nav = [
+            btn_home_view,
+            btn_view_order,
+            btn_view_client
+        ]
+        
+    if session_area == 'recursos humanos':
+        controls_nav = [
+            btn_home_view,
+            btn_view_staff
+        ]
+
+    if (session_area == 'envios') or (session_area == 'transportista'):
+        controls_nav = [
+            btn_home_view,
+            btn_view_shipment,
+        ]   
+
+
+    nav = ft.Column(
+        controls=controls_nav, 
         alignment=ft.MainAxisAlignment.START,
     )
 

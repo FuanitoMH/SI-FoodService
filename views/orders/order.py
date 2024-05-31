@@ -17,7 +17,8 @@ def OrdersView(page):
     dwn_status = ft.Dropdown(label='Estado', bgcolor=ft.colors.BLUE, color=ft.colors.WHITE, width=140, border='none', text_size=15,
                         options=[
                                 ft.dropdown.Option('Todos'),
-                                ft.dropdown.Option('en preparacion'),
+                                ft.dropdown.Option('en proceso'),
+                                ft.dropdown.Option('listo'),
                                 ft.dropdown.Option('en camino'),
                                 ft.dropdown.Option('entregado'),
                             ])
@@ -94,8 +95,6 @@ def OrdersView(page):
                                             ft.Text(value=format_phone(d.c.cli_phone), size=15)
                                         ]
                                     ),
-                                    
-                                    # ft.Text(value=d.ord_status, size=15, color='#e7e7e7', bgcolor='#5d5d5d'),
                                 ],
                                 horizontal_alignment=ft.CrossAxisAlignment.START,
                                 alignment=ft.MainAxisAlignment.START,
@@ -146,7 +145,6 @@ def OrdersView(page):
     btn_reset.on_click = reset
 
     # -- VARIABLES --
-    list_orders = []
     data_orders = get_order_join_client()
     list_orders = draw_order(data_orders)
 

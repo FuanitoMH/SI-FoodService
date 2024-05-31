@@ -6,7 +6,7 @@ from models.client import Client
 # Definición de los campos o columnas (Field instances)
 class order(BaseModel):
     ord_id = AutoField()
-    ord_cli_id = ForeignKeyField(Client, backref='orders')
+    ord_cli_id = ForeignKeyField(Client)
     ord_date = DateField()
     ord_status = CharField(20)
 
@@ -28,7 +28,8 @@ def get_orders() -> list:
     return order.select()
 
 def get_order_join_client():
-    return order.select(order, Client).join( Client, on=(order.ord_cli_id == Client.cli_id), attr='c')
+    data = order.select(order, Client).join( Client, on=(order.ord_cli_id == Client.cli_id), attr='c')
+    return data
 
 def get_order_join_client_by_id(id: int):
     return order.select(order, Client).join( Client, on=(order.ord_cli_id == Client.cli_id), attr='c').where(order.ord_id == id)
@@ -43,9 +44,8 @@ def get_orders_by_status(status: str) -> list:
     return order.select(order, Client).join( Client, on=(order.ord_cli_id == Client.cli_id), attr='c').where(order.ord_status == status)
 
 def get_orders_by_status_preparation() -> list:
-    return order.select(order, Client).join( Client, on=(order.ord_cli_id == Client.cli_id), attr='c').where(order.ord_status == 'en preparacion')
+    return order.select(order, Client).join( Client, on=(order.ord_cli_id == Client.cli_id), attr='c').where(order.ord_status == 'en proceso')
 
-if __name__ == '__main__':
-    data = get_order_join_client()
-    for d in data:
-        print(d.cli_name, d.ord_date, d.ord_status, d.ord_cli_id.cli_phone, d.ord_cli_id.cli_email, d.ord_cli_id.cli_address)
+def set_status_order_deliver(ord_id:int) -> None:
+    query = order.update(ord_status='entregado').where(order.ord_id == ord_id)
+    query.execute()

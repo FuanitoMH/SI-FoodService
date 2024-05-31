@@ -12,19 +12,25 @@ def is_valid_email(email):
 
 def registerStaffView(page, id:int=None):
 
+    options_area = [
+            ft.dropdown.Option("Todos"),
+            ft.dropdown.Option("Compras"),
+            ft.dropdown.Option("ventas"),
+            ft.dropdown.Option("envios"),
+            ft.dropdown.Option("transportista"),
+            ft.dropdown.Option("recursos humanos"),
+        ]
+    if page.client_storage.get('session_area') == 'admin':
+        options_area.append( ft.dropdown.Option("admin") )
+
+
     # Controls 
     text_name  :ft.TextField = ft.TextField(label="Nombres", text_align=ft.TextAlign.LEFT, width=500, border='underline')
     text_last_name  :ft.TextField = ft.TextField(label="Apellidos", text_align=ft.TextAlign.LEFT, width=500, border='underline')
     text_phone :ft.TextField = ft.TextField(label="Phone", text_align=ft.TextAlign.LEFT, width=500, input_filter=ft.NumbersOnlyInputFilter(), max_length=10, border='underline')
     text_email :ft.TextField = ft.TextField(label="Correo", text_align=ft.TextAlign.LEFT, width=500, border='underline')
     dwn_area = ft.Dropdown(label='Área', bgcolor=ft.colors.BLUE, color=ft.colors.WHITE, width=500, border='underline', text_size=15,
-                        options=[
-                                ft.dropdown.Option("admin"),
-                                ft.dropdown.Option("compras"),
-                                ft.dropdown.Option("ventas"),
-                                ft.dropdown.Option("envios"),
-                                ft.dropdown.Option("transportista"),
-                            ])
+                        options=options_area)
     text_passw :ft.TextField = ft.TextField(label="Contraseña", text_align=ft.TextAlign.LEFT, width=500, password=True, can_reveal_password=True, max_length=8, border='underline')
     btn_save = ft.ElevatedButton("Guardar", width=500, disabled=True)
     alert_dialog = AlertDialog(page)

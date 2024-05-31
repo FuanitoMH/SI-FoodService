@@ -6,6 +6,10 @@ from models.shipment import get_shipments, delete_shipment, get_shipments_by_dat
 
 
 def ShipmentView(page):
+    session_id_carrier = page.client_storage.get('session')
+    session_area = page.client_storage.get('session_area')
+    print(session_area)
+
     # -- CONTROLS
     nav = nav_view(page)
     dwn_date = ft.Dropdown(label='Fecha', bgcolor=ft.colors.BLUE, color=ft.colors.WHITE, width=140, border='none', text_size=15,
@@ -17,6 +21,7 @@ def ShipmentView(page):
     btn_reset = ft.ElevatedButton(text='Reset', icon=ft.icons.RESTART_ALT, icon_color='#9AC8CD')
     btn_NewShipment = ft.ElevatedButton( "Nuevo Envio", color=ft.colors.WHITE, width=130, bgcolor=ft.colors.GREEN)
     btn_cancel = ft.IconButton(icon=ft.icons.CANCEL_OUTLINED, icon_color=ft.colors.RED)
+    txt_none = ft.Text() 
 
     # -- FUNCTIONS --
     def new_shipment(e: ft.ControlEvent):
@@ -66,6 +71,11 @@ def ShipmentView(page):
     def draw_shipments(data):
         shipments_list = []
         for item in data:
+            carrier_id:int = int(f'{item.shi_carrier_id}')
+            print(type(session_id_carrier), type(carrier_id))
+            if (session_area == 'transportista') and (session_id_carrier != carrier_id):
+                print('verdadero')
+                continue
             shipments_list.append(
                 ft.Container(
                     content=ft.Column(
@@ -90,6 +100,13 @@ def ShipmentView(page):
                                     ft.Text(value=item.shi_date, size=15, width=300, text_align=ft.TextAlign.CENTER, weight='BOLD'),
                                     ft.Text(value=f'No. Ordenes: {item.shi_no_orders}', size=15),
                                     ft.Text(value=f'Transportista: {item.s.sta_name} {item.s.sta_last_name}', size=15),
+                                    
+                                    ft.Row(
+                                        [
+                                            ft.Text(value=f'Estado del Envío: ', size=15),
+                                            ft.Text(value=item.shi_status, size=15, weight=ft.FontWeight.BOLD),
+                                        ]
+                                    )
                                 ]
                             ),
                             
@@ -127,7 +144,7 @@ def ShipmentView(page):
                 [
                     btn_cancel,
                 ],
-                width=750,
+                width=850,
                 alignment=ft.MainAxisAlignment.END
             ),
             view_shipment
@@ -156,7 +173,7 @@ def ShipmentView(page):
                 [   
                     dwn_date, 
                     btn_reset,
-                    btn_NewShipment
+                    btn_NewShipment if (session_area == 'envios') or (session_area == 'admin') else txt_none
                 ], 
                 alignment=ft.MainAxisAlignment.CENTER
             ),

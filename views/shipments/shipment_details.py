@@ -2,12 +2,14 @@ import flet as ft
 from datetime import date, datetime
 from user_controls.alert_dialog import AlertDialog
 
-from models.shipment import get_shipment_by_id, post_shipment
+from models.shipment import get_shipment_by_id, post_shipment, set_status_shipment_ready
 from models.staff import get_name_carriers
-from models.cargo import post_cargo, get_orders_by_id_shipment
-from models.order import get_orders_by_status_preparation
+from models.cargo import post_cargo, get_orders_by_id_shipment, update_orders_status_onway_by_shiID
+from models.order import get_orders_by_status_preparation, set_status_order_deliver
 
 def ordenDetailsView(page, shipment_id:int=None):
+
+    session_area = page.client_storage.get('session_area')
 
     def change_data(e):
         txt_shi_date.value = date_picker.value.date()
@@ -18,6 +20,8 @@ def ordenDetailsView(page, shipment_id:int=None):
     txt_shi_date = ft.Text(value=date.today(), size=16, weight=ft.FontWeight.BOLD)
     txt_shi_no_orders = ft.Text(size=16, width=600)
     txt_shi_carrier = ft.Text(size=16, width=600)
+    txt_shi_status = ft.Text(value='en proceso', size=16, width=600)
+    txt_none = ft.Text('')
 
     today = datetime.today()
     year = today.year
@@ -37,14 +41,12 @@ def ordenDetailsView(page, shipment_id:int=None):
 
     page.overlay.append(date_picker)
 
-
     date_button = ft.IconButton(
         icon=ft.icons.CALENDAR_MONTH,
         icon_color='#e7f0f8',
         bgcolor='#6a7fc1',
         on_click=lambda _: date_picker.pick_date(),
     )
-
 
     # -- controls for select a carrier
     data_carriers = get_name_carriers()
@@ -69,13 +71,35 @@ def ordenDetailsView(page, shipment_id:int=None):
         txt_shi_date.value = data.shi_date
         txt_shi_no_orders.value = f"No. Ordenes: {data.shi_no_orders}"
         txt_shi_carrier.value = f"{data.s.sta_name} {data.s.sta_last_name}"
+        txt_shi_status.value = data.shi_status
         view.content = content_shipment_details
+        if txt_shi_status.value != 'en proceso':
+            cont_add_order.content = txt_none
+            cntn_start_shipment.content = txt_none
         page.update()
 
     def create_shipment(e: ft.ControlEvent):
         id = post_shipment(txt_shi_date.value, no_orders=0, carrier_id=int(dwn_carrier.value.split(':')[0]))
         show_detail_shipment(id)
 
+    def deliver_order(e: ft.ControlEvent):
+        ord_id = e.control.tooltip
+        set_status_order_deliver(ord_id)
+        data_items = get_orders_by_id_shipment(shipment_id)
+        items:list = draw_items(data_items)
+        content_items.controls = items
+        page.update()
+
+    def begin_shipment(e: ft.ControlEvent):
+        set_status_shipment_ready(shipment_id)
+        txt_shi_status.value = 'listo'
+        # set status order to 'en camino' 
+        update_orders_status_onway_by_shiID(shipment_id)
+        data_items = get_orders_by_id_shipment(shipment_id)
+        items:list = draw_items(data_items)
+        content_items.controls = items
+        cntn_start_shipment.content = txt_none
+        page.update()
 
     def draw_items(data):
         items = []
@@ -83,10 +107,11 @@ def ordenDetailsView(page, shipment_id:int=None):
             items.append(
                 ft.Row(
                     [
-                        # ft.Text(value=row.car_shi_id, size=16, width=300, text_align=ft.TextAlign.START),
-                        ft.Text(value=row[0], size=16, width=300),
-                        ft.Text(value=row[1], size=16, width=250),
-                        ft.Text(value=row[2], size=16, width=150),
+                        ft.Text(value=row[0], size=16, width=270), # client name 
+                        ft.Text(value=row[1], size=16, width=250), # client address
+                        ft.Text(value=row[2], size=16, width=100), # order status
+                        # row[3] is the order id
+                        ft.ElevatedButton("Entregar Orden", tooltip=row[3], on_click=lambda e: deliver_order(e)) if session_area == 'transportista' and row[2] != 'entregado' else txt_none
                     ], alignment=ft.MainAxisAlignment.START
                 )
             )
@@ -120,12 +145,14 @@ def ordenDetailsView(page, shipment_id:int=None):
     # -- CONTAINERS -- 
     if shipment_id != None:
         data_items = get_orders_by_id_shipment(shipment_id)
-        print(data_items)
         items:list = draw_items(data_items)
         content_items.controls = items
         page.update()
 
-
+    start_shipment = ft.ElevatedButton("Iniciar Envío", on_click=lambda e: begin_shipment(e))
+    cntn_start_shipment = ft.Container(
+        content=start_shipment
+    )
     # Container to show orders from shipment
     content_orders = ft.Container(
         content=ft.Column(
@@ -137,14 +164,30 @@ def ordenDetailsView(page, shipment_id:int=None):
                 ),
                 ft.Row(
                     [
-                        ft.Text("Nombre", size=16, weight=ft.FontWeight.BOLD, width=300, text_align=ft.TextAlign.START),
+                        ft.Text("Nombre", size=16, weight=ft.FontWeight.BOLD, width=270, text_align=ft.TextAlign.START),
                         ft.Text("Dirección", size=16, weight=ft.FontWeight.BOLD, width=250),
-                        ft.Text("Estado", size=16, weight=ft.FontWeight.BOLD, width=150),
+                        ft.Text("Estado", size=16, weight=ft.FontWeight.BOLD, width=100),
                     ], alignment=ft.MainAxisAlignment.START
                 ),
-                content_items
+                content_items,
+                cntn_start_shipment
             ]
         )
+    )
+
+    # Control to add a new order at shipment
+
+    conten_add_new_order =ft.Row(
+            [
+                ft.Row([
+                    dwn_orders,
+                ], alignment=ft.MainAxisAlignment.START),
+                ft.ElevatedButton("Agregar Orden", color=ft.colors.WHITE, width=130, bgcolor=ft.colors.GREEN, on_click=lambda e: add_order_to_shipment(e)),
+            ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN
+        )
+    
+    cont_add_order = ft.Container(
+        content=conten_add_new_order
     )
 
     # Container to show shipment details
@@ -175,15 +218,13 @@ def ordenDetailsView(page, shipment_id:int=None):
                         txt_shi_no_orders,  
                     ]
                 ),
-                # Control to add a new order at shipment
                 ft.Row(
                     [
-                        ft.Row([
-                            dwn_orders,
-                        ], alignment=ft.MainAxisAlignment.START),
-                        ft.ElevatedButton("Agregar Orden", color=ft.colors.WHITE, width=130, bgcolor=ft.colors.GREEN, on_click=lambda e: add_order_to_shipment(e)),
-                    ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN
+                        ft.Icon(name=ft.icons.INVENTORY_2_OUTLINED, color='#DD761C', size=12),
+                        txt_shi_status,  
+                    ]
                 ),
+                cont_add_order, 
                 content_orders
             ]
         )
@@ -212,7 +253,7 @@ def ordenDetailsView(page, shipment_id:int=None):
 
     view = ft.Container(
         content=content_new_shipment, 
-        width=750,
+        width=850,
         padding=15,
         bgcolor=ft.colors.GREY_900 if page.theme_mode == "dark" else ft.colors.GREY_100,
     )

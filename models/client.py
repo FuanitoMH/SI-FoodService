@@ -1,4 +1,5 @@
 from peewee import *
+import mysql.connector
 from models.connectionDB import BaseModel
 
 
@@ -42,3 +43,32 @@ def get_name_clients():
 def get_one_client_by_id(id: int):
     data = Client.select().where(Client.cli_id == id)
     return data[0]
+
+
+# def connDB():
+#     try:
+#         # Establish a connection
+#         conn = mysql.connector.connect(
+#             user="root", 
+#             password="pass", 
+#             host="localhost", 
+#             database="foodservice")
+#         print("Connection established")
+#     except Exception as e:
+#         raise Exception(e)
+
+#     return conn
+
+# def get_clients_(shi_id:int) -> list:
+#     conn = connDB()
+#     cursor = conn.cursor()
+#     cursor.execute(f'SELECT Client, COUNT(ord_cli_id) AS no_orders
+#     FROM `order`
+#     JOIN client
+#         ON order.ord_cli_id = client.cli_id
+#     GROUP BY cli_name;')
+
+#     data = cursor.fetchall()
+#     cursor.close()
+#     conn.close()
+#     return data

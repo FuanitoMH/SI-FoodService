@@ -4,8 +4,6 @@ from user_controls.alert_dialog import AlertDialog
 from user_controls.app_nav import nav_view
 
 
-
-
 def ProductsView(page):
     # NAVIGATION
     nav = nav_view(page)
@@ -14,7 +12,7 @@ def ProductsView(page):
     # -- CONTROLS --
     alert_dialog = AlertDialog(page)
     text_search = ft.TextField(icon=ft.icons.SEARCH, width=600, label='Buscar', border= 'UNDERLINE', border_color=ft.colors.WHITE)
-    btn_reset = ft.ElevatedButton(text='Reset', icon=ft.icons.RESTART_ALT, icon_color='#9AC8CD', color=ft.colors.WHITE, bgcolor=ft.colors.BLUE)
+    btn_reset = ft.ElevatedButton(text='Reset', icon=ft.icons.RESTART_ALT, icon_color='#9AC8CD')
     btn_NewProduct = ft.ElevatedButton( "Nuevo Producto", color=ft.colors.WHITE, width=110, bgcolor=ft.colors.GREEN)
 
     dwn_Category = ft.Dropdown(label='Categoria', bgcolor=ft.colors.BLUE, color=ft.colors.WHITE, width=140, border='none', text_size=15,
@@ -80,8 +78,7 @@ def ProductsView(page):
                                         ft.Container(content=ft.Text(value=product.pro_temperature, size=15, color=txtColorTemperature, text_align=ft.TextAlign.CENTER),
                                                     border_radius=10, bgcolor=bgColorTemperature, width=90),
                                     ], alignment=ft.MainAxisAlignment.SPACE_AROUND
-                                ),
-                                ft.Text(value=product.pro_sup_id, size=15),
+                                )
                             ]
                         ),
                         width=270,
@@ -166,7 +163,7 @@ def ProductsView(page):
                         dwn_Temperature,
                         btn_NewProduct
                     ], 
-                    alignment=ft.MainAxisAlignment.START
+                    alignment=ft.MainAxisAlignment.CENTER
                 ),
                 container_Products
             ],

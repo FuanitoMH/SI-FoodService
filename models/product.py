@@ -10,17 +10,15 @@ class product(BaseModel):
     pro_stock = IntegerField()
     pro_category = CharField(20)
     pro_temperature = CharField(20)
-    pro_sup_id = IntegerField()
 
 
-def post_product (name, description, stock, category, temperature, sup_id) -> None:
+def post_product (name, description, stock, category, temperature) -> None:
     product.create(
         pro_name = name,
         pro_description = description,
         pro_stock = stock,
         pro_category = category,
-        pro_temperature = temperature,
-        pro_sup_id = sup_id
+        pro_temperature = temperature
     )
     print('Product created successfully')
 

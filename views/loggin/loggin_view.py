@@ -5,9 +5,9 @@ from user_controls.alert_dialog import AlertDialog
 
 def logginView(page: ft.Page):
 
-    text_email: ft.TextField     = ft.TextField(label="Correo", text_align=ft.TextAlign.LEFT, width=300)
-    text_passw: ft.TextField     = ft.TextField(label="Contraseña", text_align=ft.TextAlign.LEFT, width=300, password=True)
-    btn_login: ft.ElevatedButton = ft.ElevatedButton("Aceptar", width=300, disabled=True)
+    text_email: ft.TextField     = ft.TextField(label="Correo", text_align=ft.TextAlign.LEFT, width=300, border='underline')
+    text_passw: ft.TextField     = ft.TextField(label="Contraseña", text_align=ft.TextAlign.LEFT, width=300, password=True, border='underline')
+    btn_login: ft.ElevatedButton = ft.ElevatedButton("Aceptar", width=200, disabled=True)
     btn_register: ft.CupertinoButton  = ft.CupertinoButton(
                 content=ft.Text("Registrarse", size=12),
                 width=200, color=ft.colors.BLUE_200)
@@ -23,11 +23,14 @@ def logginView(page: ft.Page):
             alert_dialog.show(title="ERROR", content="Correo o Contraseña incorrectos", status="error")
         else:
             sessionId = None 
+            session_area = None
             for staff in query:
                 sessionId = staff.sta_id
                 sessionName = staff.sta_name
+                session_area = staff.sta_area
 
             page.client_storage.set("session", sessionId)
+            page.client_storage.set("session_area", session_area)
             print(f'loggin {sessionName}')
 
             page.go('/home')
@@ -54,9 +57,9 @@ def logginView(page: ft.Page):
                     ft.Text("Iniciar Sesión", size=20),       
                     text_email,
                     text_passw,
-                    btn_login,
-                    btn_register
-                ]
+                    ft.Row([btn_login], width=300, alignment=ft.MainAxisAlignment.CENTER),
+                    # btn_register
+                ], alignment=ft.MainAxisAlignment.CENTER, height=400
             ) 
         ],
         alignment=ft.MainAxisAlignment.CENTER

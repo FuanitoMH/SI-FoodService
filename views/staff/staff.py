@@ -6,21 +6,26 @@ from models.staff import get_staff, get_staff_by_name, get_staff_by_area, delete
 
 
 def StaffView(page):
+    options_area = [
+            ft.dropdown.Option("Todos"),
+            ft.dropdown.Option("Compras"),
+            ft.dropdown.Option("ventas"),
+            ft.dropdown.Option("envios"),
+            ft.dropdown.Option("transportista"),
+            ft.dropdown.Option("recursos humanos"),
+        ]
+    if page.client_storage.get('session_area') == 'admin':
+        options_area.append( ft.dropdown.Option("admin") )
+
+
     nav = nav_view(page)
     alert_dialog = AlertDialog(page)
 
-    text_search = ft.TextField(icon=ft.icons.SEARCH, width=600, label='Buscar', border= 'UNDERLINE', border_color=ft.colors.WHITE)
+    text_search = ft.TextField(icon=ft.icons.SEARCH, width=500, label='Buscar', border= 'UNDERLINE', border_color=ft.colors.WHITE)
     btn_NewStaff = ft.ElevatedButton( "Nuevo Trabajador", color=ft.colors.WHITE, width=130, bgcolor=ft.colors.GREEN)
     dwn_area = ft.Dropdown(label='Área', bgcolor=ft.colors.BLUE, color=ft.colors.WHITE, width=140, border='none', text_size=15,
-                        options=[
-                                ft.dropdown.Option("Todos"),
-                                ft.dropdown.Option("admin"),
-                                ft.dropdown.Option("Compras"),
-                                ft.dropdown.Option("ventas"),
-                                ft.dropdown.Option("envios"),
-                                ft.dropdown.Option("transportista"),
-                            ])
-    btn_reset = ft.ElevatedButton(text='Reset', icon=ft.icons.RESTART_ALT, icon_color='#9AC8CD', color=ft.colors.WHITE, bgcolor=ft.colors.BLUE)
+                        options=options_area)
+    btn_reset = ft.ElevatedButton(text='Reset', icon=ft.icons.RESTART_ALT, icon_color='#9AC8CD')
     btn_cancel = ft.IconButton(icon=ft.icons.CANCEL_OUTLINED, icon_color=ft.colors.RED)
 
     view_register = ft.Container(
@@ -31,6 +36,7 @@ def StaffView(page):
 
     # -- FUNCTIONS --
     def registerStaff(e):
+        view_register.content = registerStaffView(page)
         content.content = content_register
         content.update()
 
@@ -134,6 +140,7 @@ def StaffView(page):
                         height=600,
                         width=1410,
                         run_spacing=10,
+                        alignment=ft.MainAxisAlignment.CENTER,
                     )
     
     
@@ -172,7 +179,7 @@ def StaffView(page):
                     btn_reset,
                     btn_NewStaff
                 ], 
-                alignment=ft.MainAxisAlignment.START
+                alignment=ft.MainAxisAlignment.CENTER
             ),
             staff
         ],

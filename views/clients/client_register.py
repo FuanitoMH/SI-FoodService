@@ -5,13 +5,14 @@ from user_controls.alert_dialog import AlertDialog
 from user_controls.app_nav import nav_view
 
 
-def ClientsRegisterView(page: ft.Page):
+def ClientsRegisterView(page: ft.Page, id_client=None):
     # NAVIGATION
     nav: ft.Column = nav_view(page) 
-
     alert = AlertDialog(page)
 
     # -- CONTROLS --
+    text_id_client    = ft.Text(value=id_client)
+
     text_name    = ft.TextField(label='Nombre', width=500, border='UNDERLINE', text_size=17)
     text_phone   = ft.TextField(label="Phone", text_align=ft.TextAlign.LEFT, width=500, border='UNDERLINE', text_size=16, input_filter=ft.NumbersOnlyInputFilter(), max_length=10)
     text_email   = ft.TextField(label="Correo", text_align=ft.TextAlign.LEFT, width=500, border='UNDERLINE', text_size=16)

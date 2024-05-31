@@ -23,6 +23,6 @@ def main(page: ft.Page):
     if page.client_storage.get('session') == None:
         page.go("/login")
     else:
-        page.go("/shipments")
+        page.go("/home")
 
 ft.app(target=main, assets_dir="assets")

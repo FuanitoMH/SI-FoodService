@@ -45,6 +45,5 @@ class Router:
 
     def route_change(self, route):
         print('current rute: ', route.route)
-        # self.body.content = self.routes[route.route]
         self.body.content = myRutes(self.page, route.route)
         self.body.update()

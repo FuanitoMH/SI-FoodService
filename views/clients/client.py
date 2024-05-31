@@ -53,11 +53,10 @@ def ClientView(page: ft.Page):
                             ),
                             ft.Text(value=client.cli_email, size=text_size, text_align=ft.TextAlign.CENTER, width=250),
                             ft.Text(value=show_phone(client.cli_phone), size=text_size, text_align=ft.TextAlign.CENTER, width=225),
-                            ft.Text('403', size=text_size, text_align=ft.TextAlign.CENTER, width=225),
                             ft.Row(
                                 [
                                     ft.IconButton( icon=ft.icons.DELETE_FOREVER_OUTLINED, icon_color="red400", icon_size=25, tooltip=client.cli_id, on_click=delete_client),
-                                    ft.IconButton(icon=ft.icons.EDIT_OUTLINED, icon_color="blue400", icon_size=25, tooltip=client.cli_id, )
+                                    # ft.IconButton(icon=ft.icons.EDIT_OUTLINED, icon_color="blue400", icon_size=25, tooltip=client.cli_id, )
                                 ],width=150, alignment=ft.MainAxisAlignment.END
                             ),
                         ],
@@ -89,24 +88,22 @@ def ClientView(page: ft.Page):
 
     # -- CONTENT --
     text_size = 15
-    row_header_client = ft.Container(width=1400,
-        content=ft.Row(
+    row_header_client = ft.Row(
             [   
                 ft.Text('Información Cliente', size=text_size, width=380, text_align=ft.TextAlign.START),
                 ft.Text('Correo', size=text_size, width=270, text_align=ft.TextAlign.CENTER),
                 ft.Text('Teléfono', size=text_size, width=215, text_align=ft.TextAlign.CENTER),
-                ft.Text('No. Pedidos', size=text_size, width=230, text_align=ft.TextAlign.CENTER)
             ],
             alignment=ft.MainAxisAlignment.START,
+            width=1100,
         )
-    )
     
 
     container_clients=ft.Column(
             controls=list_clients,
             alignment=ft.MainAxisAlignment.START,
             scroll='ALWAYS',
-            width=1415,
+            width=1100,
             height=600
         )
 
@@ -119,12 +116,13 @@ def ClientView(page: ft.Page):
                     btn_NewClient
                 ], 
                 alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
-                width=1300
+                width=1100
             ),
             row_header_client,
             container_clients
         ],
-        alignment=ft.MainAxisAlignment.START,
+        alignment=ft.MainAxisAlignment.CENTER,
+        horizontal_alignment=ft.CrossAxisAlignment.CENTER,
         width=1420,
 
     )

@@ -16,7 +16,7 @@ def ordenDetailsView(page, order_id:int=None):
 
     # Controls 
     alert_dialog = AlertDialog(page)
-    
+    txt_ord_id = ft.Text(value=order_id)
     dwn_client = ft.Dropdown('Cliente', text_size=16, width=650, border='UNDERLINE',
                             options=options_clients)
     txt_date = ft.Text(value=date.today(), size=16)
@@ -25,18 +25,18 @@ def ordenDetailsView(page, order_id:int=None):
     txt_cli_id = ft.Text("ID: ", size=16, width=600)
     txt_cli_address = ft.Text("Direccion: ", size=16, width=600)
     txt_cli_phone = ft.Text("Telefono: ", size=16, width=600)
-    txt_status = ft.Text("en preparacion", size=16, width=600)
+    txt_status = ft.Text(value="en proceso", size=16, width=600)
     btn_create_ord = ft.ElevatedButton("Crear Orden", color=ft.colors.WHITE, width=130, bgcolor=ft.colors.GREEN)
 
     # -- FUNCTIONS --
     def format_phone(number: str) -> str:
         return f'({number[:3]}) {number[3:6]}-{number[6:]}'
 
+    #############
     def create_order(e: ft.ControlEvent):
-        global ord_id
-        ord_id = post_order(int(txt_cli_id.value.split(":")[1]), txt_date.value, txt_status.value)
+        id = post_order(int(txt_cli_id.value.split(":")[1]), txt_date.value, txt_status.value)
+        txt_ord_id.value = id
         content.content = content_order
-        print(ord_id)
         page.update()
 
     def show_client(e: ft.ControlEvent):
@@ -87,7 +87,7 @@ def ordenDetailsView(page, order_id:int=None):
         return items
     
     def add_product_to_order(e: ft.ControlEvent):
-        global ord_id
+        ord_id = txt_ord_id.value
         post_item(ord_id, int(dwn_products.value.split(":")[0]), txt_stock.value)
         data = get_items_by_id_order(ord_id)
         items:list = draw_items(data)
@@ -101,7 +101,7 @@ def ordenDetailsView(page, order_id:int=None):
 
     data_products = get_name_products()
     options_products = [ft.dropdown.Option(f'{product.pro_id}: {product.pro_name}') for product in data_products]
-    dwn_products = ft.Dropdown('Productos', text_size=16, width=200, border='UNDERLINE', options=options_products)
+    dwn_products = ft.Dropdown('Productos', text_size=16, width=250, border='UNDERLINE', options=options_products)
     txt_stock = ft.TextField(label='Cantidad', text_size=16, width=100, border='none')
 
     # -- CONTAINERS --

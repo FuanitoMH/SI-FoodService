@@ -9,6 +9,7 @@ class shipment(BaseModel):
     shi_date = DateField()
     shi_no_orders = IntegerField()
     shi_carrier_id = ForeignKeyField(staff)
+    shi_status = CharField(35)
 
 
 def post_shipment(date, no_orders, carrier_id):
@@ -46,3 +47,7 @@ def get_shipments_by_date(order_by:str):
         return (shipment.select(shipment, staff.sta_name, staff.sta_last_name)
             .join(staff, on=(staff.sta_id == shipment.shi_carrier_id), attr='s')
             .order_by(shipment.shi_date.asc()))
+    
+def set_status_shipment_ready(shi_id:int) -> None:
+    query = shipment.update(shi_status='listo').where(shipment.shi_id == shi_id)
+    query.execute()
